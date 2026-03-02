@@ -19,7 +19,7 @@ EditorUI is a lightweight, immediate-mode UI library designed specifically for b
 
 ## Getting Started
 
-1. Add the EditorUI project to your solution, or install via NuGet (if published):
+1. Add the EditorUI project to your solution, or install via NuGet:
 
 ```bash
 dotnet add package EditorUI
