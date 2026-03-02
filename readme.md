@@ -17,6 +17,25 @@ EditorUI is a lightweight, immediate-mode UI library designed specifically for b
 
 ---
 
+## Controls
+    - Button
+    - Control - Abstract class, this is the base class all other controls derive from. Can be used to build custom controls
+    - Container Control - Abstract class, used to build custom controls that contain child controls
+    - Dockable Control - Abstract class, used to build custom controls, allows control to be docked in UIManager
+    - DropDown
+    - Label
+    - ListBox
+    - Menu
+        - Menu Item (button type)
+        - Menu Drop Down Item (drop down type)
+    - NumericTextBox
+    - Panel
+    - Slider
+    - TabControl
+    - TextBox (single line)
+    - Window
+    - Color Picker Widget
+
 ## Getting Started
 
 1. Add the EditorUI project to your solution, or install via NuGet:
