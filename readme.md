@@ -22,7 +22,7 @@ EditorUI is a lightweight, immediate-mode UI library designed specifically for b
 1. Add the EditorUI project to your solution, or install via NuGet:
 
 ```bash
-dotnet add package EditorUI
+dotnet add package EditorUI --version 1.0.0
 ```
 
 2. Initialize a new Instance of ```UIManager```. Pass in a reference to Game1, and the name of a ```DefaultFont``` that will be used by the UI. Don't forget to call the 
