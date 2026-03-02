@@ -1,0 +1,52 @@
+using System.Linq;
+using EditorUI.Util;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+
+namespace EditorUI.Controls
+{
+    public abstract class ContainerControl : Control
+    {
+        public ControlCollection Children{get; private set;} = new ControlCollection();
+        public Layout Layout{get;set;} = new RowLayout();
+        public int Padding{get;set;} = 5;
+
+        
+        public ContainerControl()
+        {
+            Children.OnControlsChanged += AfterDirty;
+        }
+        protected override void AfterDirty()
+        {
+            Layout.HandleLayout(Bounds, Children.Controls, Padding);
+        }
+        public override Control HitTest(Point p)
+        {
+            if(!IsActive){return null;}
+
+            for (int i = 0; i < Children.Controls.Count; i++)
+            {
+                var hit = Children.Controls[i].HitTest(p);
+
+                if(hit != null)
+                {
+                    return hit;
+                }
+            }
+            return Bounds.Contains(p)? this : null;
+        }
+        public override void Draw(SpriteBatch spritebatch)
+        {
+            base.Draw(spritebatch);
+
+            ScissorStack.Push(Bounds);
+
+            foreach (var control in Children.Controls.OrderByDescending(c => c.ZOrder))
+            {
+                control.Draw(spritebatch);
+            }
+
+            ScissorStack.Pop();
+        }
+    }
+}
