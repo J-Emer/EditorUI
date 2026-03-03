@@ -58,7 +58,7 @@ namespace EditorUI.Controls
 
             Children.OnControlsChanged += AfterDirty;
 
-            Logger.Log(this, "//todo: Add a MinSize check");
+            // Logger.Log(this, "//todo: Add a MinSize check");
         }
         private void CloseBtnClicked(Button button, MouseEvent @event)
         {

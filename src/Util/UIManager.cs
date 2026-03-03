@@ -48,7 +48,16 @@ namespace EditorUI.Util
 
             Instance = this;
         }
-
+        
+        /// <summary>
+        /// Finds a DockableControl
+        /// </summary>
+        /// <param name="name">Name of the Control</param>
+        /// <returns>Dockable Control</returns>
+        public DockableControl Find(string name)
+        {
+            return windows.Find(x => x.Name == name);
+        }
         public void ChildDockChanged()
         {
             _dockManager.HandleDock(windows);
