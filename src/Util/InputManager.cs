@@ -29,10 +29,21 @@ namespace EditorUI.Util
         public static Point MousePosition => new Point(_currentMouse.X, _currentMouse.Y);
 
         public static bool LeftPressed => _currentMouse.LeftButton == ButtonState.Pressed && _previousMouse.LeftButton == ButtonState.Released;
-
         public static bool LeftReleased => _currentMouse.LeftButton == ButtonState.Released && _previousMouse.LeftButton == ButtonState.Pressed;
+        public static bool LeftDown => _currentMouse.LeftButton == ButtonState.Pressed; //todo: this should be renamed to "LeftHeld"
 
-        public static bool LeftDown => _currentMouse.LeftButton == ButtonState.Pressed;
+
+
+        public static bool RightPressed => _currentMouse.RightButton == ButtonState.Pressed && _previousMouse.RightButton == ButtonState.Released;
+        public static bool RightReleased => _currentMouse.RightButton == ButtonState.Released && _previousMouse.RightButton == ButtonState.Pressed;
+        public static bool RightDown => _currentMouse.RightButton == ButtonState.Pressed; //todo: this should be renamed to "RightHeld"
+
+
+        public static bool MiddlePressed => _currentMouse.MiddleButton == ButtonState.Pressed && _previousMouse.MiddleButton == ButtonState.Released;
+        public static bool MiddleReleased => _currentMouse.MiddleButton == ButtonState.Released && _previousMouse.MiddleButton == ButtonState.Pressed;
+        public static bool MiddleDown => _currentMouse.MiddleButton == ButtonState.Pressed; //todo: this should be renamed to "MiddelHeld"
+
+
 
         public static int ScrollDelta => _currentMouse.ScrollWheelValue - _previousMouse.ScrollWheelValue;
 
