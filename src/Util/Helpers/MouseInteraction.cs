@@ -54,7 +54,7 @@ namespace EditorUI.Util.Helpers
             // --------------------------------------------------
             // Mouse Down (Capture)
             // --------------------------------------------------
-            if (InputManager.LeftPressed)
+            if (InputManager.LeftPressed || InputManager.RightPressed)
             {
                 if (_hoveredControl != null)
                 {
@@ -66,6 +66,11 @@ namespace EditorUI.Util.Helpers
                     {
                         UIManager.Instance.BringToFront((Window)_hoveredControl);
                     }
+                }
+
+                if(InputManager.RightPressed)
+                {
+                    //show ContextMenu
                 }
             }
 
@@ -88,7 +93,7 @@ namespace EditorUI.Util.Helpers
             // --------------------------------------------------
             // Mouse Up (Release Capture)
             // --------------------------------------------------
-            if (InputManager.LeftReleased)
+            if (InputManager.LeftReleased || InputManager.RightReleased)
             {
                 if (_capturedControl != null)
                 {

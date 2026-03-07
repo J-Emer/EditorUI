@@ -33,7 +33,7 @@ namespace EditorUI.Controls
 
 
 
-
+        private ContextMenu _windowContextMenu;
 
 
 
@@ -58,8 +58,39 @@ namespace EditorUI.Controls
 
             Children.OnControlsChanged += AfterDirty;
 
+            SetWindowContextMenu();
             // Logger.Log(this, "//todo: Add a MinSize check");
         }
+        private void SetWindowContextMenu()
+        {
+            _windowContextMenu = new ContextMenu();
+            Button left = _windowContextMenu.Add("Left");
+            left.UserData = DockStyle.Left;
+            left.OnClick = DockButtonClicked;
+
+            Button right = _windowContextMenu.Add("Right");
+            right.UserData = DockStyle.Right;
+            right.OnClick = DockButtonClicked;
+
+            Button top = _windowContextMenu.Add("Top");
+            top.UserData = DockStyle.Top;
+            top.OnClick = DockButtonClicked;
+
+            Button bottom = _windowContextMenu.Add("Bottom");
+            bottom.UserData = DockStyle.Bottom;
+            bottom.OnClick = DockButtonClicked;
+
+            Button close = _windowContextMenu.Add("Close");
+            close.OnClick = CloseBtnClicked;
+        }
+
+        private void DockButtonClicked(Button button, MouseEvent @event)
+        {
+            Dock = (DockStyle)button.UserData;
+            _windowContextMenu.IsActive = false;
+            UIManager.Instance.RemoveOverlay(_windowContextMenu);
+        }
+
         private void CloseBtnClicked(Button button, MouseEvent @event)
         {
             UIManager.Instance.Remove(this);
@@ -73,6 +104,13 @@ namespace EditorUI.Controls
             if(hitClose != null)
             {
                 return _closeButton;
+            }
+
+            var contextMenuHit = _windowContextMenu.HitTest(p);
+
+            if(contextMenuHit != null)
+            {
+                return contextMenuHit;
             }
 
             for (int i = 0; i < Children.Controls.Count; i++)
@@ -138,18 +176,32 @@ namespace EditorUI.Controls
 
         public override void OnMouseDown(MouseEvent e)
         {
-            if(_headerRect.Contains(e.Position))
+            if(e.LeftDown)
             {
-                _isDragging = true;
-                _offset = e.Position - Position;
-                Size = MinSize;
-                dock = DockStyle.None;
+                if(_headerRect.Contains(e.Position))
+                {
+                    _isDragging = true;
+                    _offset = e.Position - Position;
+                    Size = MinSize;
+                    dock = DockStyle.None;
+                }
+
+                if(_grabRect.Contains(e.Position) && Dock == DockStyle.None)
+                {
+                    _isResizing = true;
+                }
             }
 
-            if(_grabRect.Contains(e.Position) && Dock == DockStyle.None)
+            if(e.RightDown)
             {
-                _isResizing = true;
+                if(_headerRect.Contains(e.Position))
+                {
+                    _windowContextMenu.IsActive = true;
+                    _windowContextMenu.Position = e.Position;
+                    UIManager.Instance.ShowOverlay(_windowContextMenu);
+                }
             }
+
         }
         public override void OnMouseDrag(MouseEvent e)
         {
