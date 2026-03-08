@@ -26,6 +26,8 @@ namespace EditorUI.Controls
                 Text = text
             };
 
+            _b.OnClick += RemoveOverlay;
+
             Children.Add(_b);
             
             return _b;
@@ -35,13 +37,23 @@ namespace EditorUI.Controls
             Button _b = new Button
             {
                 Text = text,
-                UserData = userdata
+                UserData = userdata,
             };
+
+            _b.OnClick += RemoveOverlay;
 
             Children.Add(_b);
             
             return _b;
-        }   
+        }
+
+        private void RemoveOverlay(Button button, MouseEvent @event)
+        {
+            UIManager.Instance.RemoveOverlay(this);
+            IsActive = false;
+            Logger.Log(this, "Removing Overlay");
+        }
+
         public void Remove(Button button)
         {
             Children.Remove(button);

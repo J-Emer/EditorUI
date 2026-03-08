@@ -87,8 +87,8 @@ namespace EditorUI.Controls
         private void DockButtonClicked(Button button, MouseEvent @event)
         {
             Dock = (DockStyle)button.UserData;
-            _windowContextMenu.IsActive = false;
-            UIManager.Instance.RemoveOverlay(_windowContextMenu);
+            // _windowContextMenu.IsActive = false;
+            // UIManager.Instance.RemoveOverlay(_windowContextMenu);
         }
 
         private void CloseBtnClicked(Button button, MouseEvent @event)
