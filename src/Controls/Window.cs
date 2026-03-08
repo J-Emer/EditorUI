@@ -93,6 +93,7 @@ namespace EditorUI.Controls
 
         private void CloseBtnClicked(Button button, MouseEvent @event)
         {
+            UIManager.Instance.RemoveOverlay(_windowContextMenu);
             UIManager.Instance.Remove(this);
         }
         public override Control HitTest(Point p)
