@@ -5,9 +5,6 @@ namespace EditorUI.Controls
 {
     public class ContextMenu : ContainerControl
     {
-
-
-
         public ContextMenu()
         {
             Layout = new RowLayout();
@@ -21,8 +18,6 @@ namespace EditorUI.Controls
 
         public Button Add(string text)
         {
-            Logger.Log(this, "Add");
-
             Button _b = new Button
             {
                 Text = text,
@@ -37,8 +32,6 @@ namespace EditorUI.Controls
         }
         public Button Add(string text, object userdata)
         {
-            Logger.Log(this, "Add with userdata");
-
             Button _b = new Button
             {
                 Text = text,
@@ -61,11 +54,6 @@ namespace EditorUI.Controls
         public void Remove(Button button)
         {
             Children.Remove(button);
-        }
-        public override void OnMouseExit(MouseEvent e)
-        {
-            // IsActive = false;
-            // UIManager.Instance.RemoveOverlay(this);
         }
     }
 }
