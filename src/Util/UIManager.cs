@@ -28,15 +28,15 @@ namespace EditorUI.Util
 
         private List<ContainerControl> _overlayPanels = new List<ContainerControl>();
 
+        public Desktop ActiveDesktop{get; private set;}
 
 
 
 
-
-        public UIManager(Game game, string defaultFontName)
+        public UIManager(Game game, Desktop desktop, string defaultFontName)
         {
             _graphics = game.GraphicsDevice;
-
+            ActiveDesktop = desktop;
             AssetLoader.Init(_graphics, game.Content.Load<SpriteFont>(defaultFontName));
 
             _spriteBatch = new SpriteBatch(_graphics);
@@ -47,6 +47,8 @@ namespace EditorUI.Util
             _dockManager = new DockManager(_graphics.Viewport.Bounds);
 
             Instance = this;
+
+            ActiveDesktop.Load();
         }
         
         /// <summary>
@@ -142,6 +144,23 @@ namespace EditorUI.Util
         public void RemoveOverlay(ContainerControl _control)
         {
             _overlayPanels.Remove(_control);
+        }
+
+
+
+
+        public void SwitchDesktops(Desktop desktop)
+        {
+            if(ActiveDesktop != null)
+            {
+                ActiveDesktop.Unload();
+            }
+
+            _overlayPanels.Clear();
+            windows.Clear();
+
+            ActiveDesktop = desktop;
+            ActiveDesktop.Load();
         }
 
 

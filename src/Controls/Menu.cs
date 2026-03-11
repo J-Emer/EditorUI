@@ -120,6 +120,7 @@ namespace EditorUI.Controls
         }
         private Color _normalColor = Color.Transparent;
         private Action<MenuItem> Callback;
+        public Action<MenuItem> OnClick;
 
         public MenuItem(string text, Action<MenuItem> callback) : base()
         {
@@ -152,6 +153,7 @@ namespace EditorUI.Controls
         public override void OnMouseDown(MouseEvent e)
         {
             Callback?.Invoke(this);
+            OnClick?.Invoke(this);
         }        
     }
     public class DropDownMenuItem : MenuItem

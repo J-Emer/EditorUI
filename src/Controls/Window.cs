@@ -34,7 +34,7 @@ namespace EditorUI.Controls
 
 
         private ContextMenu _windowContextMenu;
-
+        public ContextMenu ContextMenu{get;set;} = null;
 
 
         public Window(string name) : base()
@@ -66,31 +66,27 @@ namespace EditorUI.Controls
             _windowContextMenu = new ContextMenu();
             Button left = _windowContextMenu.Add("Left");
             left.UserData = DockStyle.Left;
-            left.OnClick = DockButtonClicked;
+            left.OnClick += DockButtonClicked;
 
             Button right = _windowContextMenu.Add("Right");
             right.UserData = DockStyle.Right;
-            right.OnClick = DockButtonClicked;
+            right.OnClick += DockButtonClicked;
 
             Button top = _windowContextMenu.Add("Top");
             top.UserData = DockStyle.Top;
-            top.OnClick = DockButtonClicked;
+            top.OnClick += DockButtonClicked;
 
             Button bottom = _windowContextMenu.Add("Bottom");
             bottom.UserData = DockStyle.Bottom;
-            bottom.OnClick = DockButtonClicked;
+            bottom.OnClick += DockButtonClicked;
 
             Button close = _windowContextMenu.Add("Close");
-            close.OnClick = CloseBtnClicked;
+            close.OnClick += CloseBtnClicked;
         }
-
         private void DockButtonClicked(Button button, MouseEvent @event)
         {
             Dock = (DockStyle)button.UserData;
-            // _windowContextMenu.IsActive = false;
-            // UIManager.Instance.RemoveOverlay(_windowContextMenu);
         }
-
         private void CloseBtnClicked(Button button, MouseEvent @event)
         {
             UIManager.Instance.RemoveOverlay(_windowContextMenu);
@@ -107,11 +103,21 @@ namespace EditorUI.Controls
                 return _closeButton;
             }
 
-            var contextMenuHit = _windowContextMenu.HitTest(p);
+            var _windowContextMenuHit = _windowContextMenu.HitTest(p);
 
-            if(contextMenuHit != null)
+            if(_windowContextMenuHit != null)
             {
-                return contextMenuHit;
+                return _windowContextMenuHit;
+            }
+
+            if(ContextMenu != null)
+            {
+                var _contextMenuHit = ContextMenu.HitTest(p);
+
+                if(_contextMenuHit != null)
+                {
+                    return _contextMenuHit;
+                }        
             }
 
             for (int i = 0; i < Children.Controls.Count; i++)
@@ -200,6 +206,14 @@ namespace EditorUI.Controls
                     _windowContextMenu.IsActive = true;
                     _windowContextMenu.Position = e.Position;
                     UIManager.Instance.ShowOverlay(_windowContextMenu);
+                }
+                if(_bodyRect.Contains(e.Position))
+                {
+                    if(ContextMenu != null)
+                    {
+                        ContextMenu.Position = e.Position;
+                        UIManager.Instance.ShowOverlay(ContextMenu);
+                    }
                 }
             }
 

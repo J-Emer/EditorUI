@@ -21,9 +21,12 @@ namespace EditorUI.Controls
 
         public Button Add(string text)
         {
+            Logger.Log(this, "Add");
+
             Button _b = new Button
             {
-                Text = text
+                Text = text,
+                OnClick = RemoveOverlay
             };
 
             _b.OnClick += RemoveOverlay;
@@ -34,10 +37,13 @@ namespace EditorUI.Controls
         }
         public Button Add(string text, object userdata)
         {
+            Logger.Log(this, "Add with userdata");
+
             Button _b = new Button
             {
                 Text = text,
                 UserData = userdata,
+                OnClick = RemoveOverlay
             };
 
             _b.OnClick += RemoveOverlay;
@@ -46,19 +52,16 @@ namespace EditorUI.Controls
             
             return _b;
         }
-
         private void RemoveOverlay(Button button, MouseEvent @event)
         {
             UIManager.Instance.RemoveOverlay(this);
             IsActive = false;
             Logger.Log(this, "Removing Overlay");
         }
-
         public void Remove(Button button)
         {
             Children.Remove(button);
         }
-
         public override void OnMouseExit(MouseEvent e)
         {
             // IsActive = false;
